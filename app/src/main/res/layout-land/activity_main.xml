@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.main.MainActivity">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_master"
+        style="@style/Widget.Material3.MaterialTimePicker.ImageButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:text="@string/master"
+        android:textColor="@color/dark_blue"
+        android:textSize="18sp"
+        app:backgroundTint="@color/dark_blue10"
+        app:cornerRadius="10dp"
+        app:icon="@drawable/master"
+        app:iconGravity="textTop"
+        app:iconPadding="20dp"
+        app:iconSize="80dp"
+        app:iconTint="@color/dark_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/guideline_middle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/dark_blue"
+        app:strokeWidth="2dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_middle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_slave"
+        style="@style/Widget.Material3.MaterialTimePicker.ImageButton"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_margin="20dp"
+        android:text="@string/slave"
+        android:textColor="@color/dark_blue"
+        android:textSize="18sp"
+        app:backgroundTint="@color/dark_blue10"
+        app:cornerRadius="10dp"
+        app:icon="@drawable/slave"
+        app:iconGravity="textTop"
+        app:iconPadding="20dp"
+        app:iconSize="80dp"
+        app:iconTint="@color/dark_blue"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/guideline_middle"
+        app:layout_constraintTop_toTopOf="parent"
+        app:strokeColor="@color/dark_blue"
+        app:strokeWidth="2dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
