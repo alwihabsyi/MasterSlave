@@ -1,17 +1,19 @@
 package com.demoapp.masterslave.presentation.main
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.demoapp.masterslave.databinding.ActivityMainBinding
 import com.demoapp.masterslave.presentation.master.MasterActivity
 import com.demoapp.masterslave.presentation.slave.SlaveActivity
-import com.demoapp.masterslave.databinding.ActivityMainBinding
+import com.demoapp.masterslave.utils.setFullScreen
 import com.demoapp.masterslave.utils.toast
 
 class MainActivity : AppCompatActivity() {
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -29,7 +32,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onClickListener() = binding.run {
-        btnMaster?.setOnClickListener {
+        btnMaster.setOnClickListener {
             startActivity(
                 Intent(
                     this@MainActivity,
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity() {
                 )
             )
         }
-        btnSlave?.setOnClickListener {
+        btnSlave.setOnClickListener {
             startActivity(
                 Intent(
                     this@MainActivity,
@@ -85,6 +88,11 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        setFullScreen()
     }
 
     override fun onDestroy() {

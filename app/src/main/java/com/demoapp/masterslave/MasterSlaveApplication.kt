@@ -2,7 +2,9 @@ package com.demoapp.masterslave
 
 import android.app.Application
 import com.demoapp.masterslave.core.di.commonModule
+import com.demoapp.masterslave.core.di.dataSourceModule
 import com.demoapp.masterslave.core.di.fileModule
+import com.demoapp.masterslave.core.di.helperModule
 import com.demoapp.masterslave.core.di.nsdModule
 import com.demoapp.masterslave.core.di.repositoriesModule
 import com.demoapp.masterslave.core.di.serverSocketModule
@@ -27,7 +29,9 @@ class MasterSlaveApplication: Application() {
                 fileModule,
                 repositoriesModule,
                 useCasesModule,
-                viewModelModules
+                viewModelModules,
+                helperModule,
+                dataSourceModule
             ))
         }
     }

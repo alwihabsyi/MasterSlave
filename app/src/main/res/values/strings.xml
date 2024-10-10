@@ -2,6 +2,11 @@
     <string name="app_name">MasterSlave</string>
     <string name="master">Master</string>
     <string name="slave">Slave</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_slave_connected">No slave connected</string>
+    <string name="slave_connected">%1$s slave connected</string>
+    <string name="connected_to_master">Connected to master %1$s</string>
+    <string name="indicator">indicator</string>
+    <string name="send_to_slaves">Send to slaves</string>
+    <string name="video_download_progress">Video download progress</string>
+    <string name="not_connected">Not Connected</string>
 </resources>

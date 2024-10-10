@@ -1,6 +1,7 @@
-package com.demoapp.masterslave.core.repository
+package com.demoapp.masterslave.core.data.repository
 
 import com.demoapp.masterslave.core.domain.model.VideoFile
+import com.demoapp.masterslave.core.domain.repository.VideoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -10,7 +11,7 @@ import java.io.File
 
 class VideoRepositoryImpl(
     private val fileDirectory: File
-) : com.demoapp.masterslave.core.domain.repository.VideoRepository {
+) : VideoRepository {
     override fun getVideosFromDirectory(): Flow<List<VideoFile>> = callbackFlow {
         withContext(Dispatchers.IO) {
             val videoFiles = fileDirectory.listFiles { file ->

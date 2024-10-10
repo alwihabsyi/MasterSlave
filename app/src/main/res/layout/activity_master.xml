@@ -7,6 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".presentation.master.MasterActivity">
 
+    <ImageView
+        android:id="@+id/iv_indicator"
+        android:layout_width="18dp"
+        android:layout_height="18dp"
+        android:layout_margin="20dp"
+        android:contentDescription="@string/indicator"
+        android:src="@drawable/ic_indicator"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="@string/no_slave_connected"
+        app:layout_constraintBottom_toBottomOf="@id/iv_indicator"
+        app:layout_constraintStart_toEndOf="@id/iv_indicator"
+        app:layout_constraintTop_toTopOf="@id/iv_indicator" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_videos"
         android:layout_width="0dp"
@@ -15,7 +35,7 @@
         app:layout_constraintBottom_toTopOf="@id/btn_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/tv_indicator" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_send"
@@ -23,7 +43,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
-        android:text="Send to slaves"
+        android:text="@string/send_to_slaves"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <com.google.android.material.progressindicator.LinearProgressIndicator

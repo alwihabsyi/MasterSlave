@@ -23,8 +23,32 @@ class MasterViewModel(
         clientUseCase.registerNsdService(onSuccess)
     }
 
-    fun sendVideosToClients(selectedVideos: List<VideoFile>, socket: Socket, onSuccess: (List<String>, Long) -> Unit) = viewModelScope.launch {
-        clientUseCase.sendFilesToClient(socket, selectedVideos, onSuccess)
+    fun sendVideosToClients(
+        selectedVideos: List<VideoFile>,
+        socket: Socket,
+        onSuccess: () -> Unit,
+        onSendingProgress: (Int) -> Unit
+    ) = viewModelScope.launch {
+        clientUseCase.sendFilesToClient(socket, selectedVideos, onSuccess, onSendingProgress)
+    }
+
+    fun sendPlayTimeStamp(
+        socket: Socket,
+        videoFiles: List<VideoFile>,
+        playbackStartTime: Long,
+        masterTime: Long,
+        onSuccess: () -> Unit
+    ) = viewModelScope.launch {
+        clientUseCase.sendPlayTimeStamp(socket, videoFiles, playbackStartTime, masterTime, onSuccess)
+    }
+
+    fun sendVideoTimeStamp(
+        socket: Socket,
+        video: String,
+        masterPosition: Long,
+        masterTimestamp: Long
+    ) = viewModelScope.launch {
+        clientUseCase.sendVideoTimeStamp(socket, video, masterPosition, masterTimestamp)
     }
 
     fun closeSocket() = clientUseCase.closeClient()

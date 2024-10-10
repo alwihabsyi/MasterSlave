@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.demoapp.masterslave.R
+import com.demoapp.masterslave.core.R
 import com.demoapp.masterslave.core.domain.model.VideoFile
 
 class VideoAdapter : RecyclerView.Adapter<VideoAdapter.VideoViewHolder>() {
