@@ -1,19 +1,23 @@
-package com.demoapp.masterslave.presentation.slave
+package com.demoapp.masterslave.ui.slave
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.demoapp.masterslave.R
 import com.demoapp.masterslave.databinding.ActivitySlaveBinding
-import com.demoapp.masterslave.presentation.player.PlayerViewModel
+import com.demoapp.masterslave.ui.player.PlayerViewModel
 import com.demoapp.masterslave.utils.getIndicator
 import com.demoapp.masterslave.utils.setFullScreen
 import com.demoapp.masterslave.utils.switchToExoPlayerFragment
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.activityScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.scope.Scope
 import java.net.Socket
 
-class SlaveActivity : AppCompatActivity() {
+class SlaveActivity : AppCompatActivity(), AndroidScopeComponent {
 
+    override val scope: Scope by activityScope()
     private var _binding: ActivitySlaveBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModel<SlaveViewModel>()
@@ -73,7 +77,10 @@ class SlaveActivity : AppCompatActivity() {
         tvIndicator.text = message
     }
 
-    private fun handleConnectionError() { startDiscover() }
+    private fun handleConnectionError() {
+        viewModel.cancelScope(masterSocket)
+        startDiscover()
+    }
 
     override fun onResume() {
         super.onResume()

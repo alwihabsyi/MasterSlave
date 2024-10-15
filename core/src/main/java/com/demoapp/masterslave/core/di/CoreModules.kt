@@ -4,18 +4,18 @@ import android.net.nsd.NsdManager
 import android.os.Build
 import android.os.Build.VERSION_CODES.M
 import android.os.Environment
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity.NSD_SERVICE
 import com.demoapp.masterslave.core.common.SharedState
-import com.demoapp.masterslave.core.data.helper.SocketHelper
-import com.demoapp.masterslave.core.domain.repository.ClientRepository
-import com.demoapp.masterslave.core.domain.repository.SlaveRepository
-import com.demoapp.masterslave.core.domain.repository.VideoRepository
+import com.demoapp.masterslave.core.data.nsd.NsdService
 import com.demoapp.masterslave.core.data.repository.ClientRepositoryImpl
 import com.demoapp.masterslave.core.data.repository.SlaveRepositoryImpl
 import com.demoapp.masterslave.core.data.repository.VideoRepositoryImpl
-import com.demoapp.masterslave.core.data.source.MasterDataSource
-import com.demoapp.masterslave.core.data.source.SlaveDataSource
+import com.demoapp.masterslave.core.data.socket.BaseSocketService
+import com.demoapp.masterslave.core.data.socket.MasterSocketService
+import com.demoapp.masterslave.core.data.socket.SlaveSocketService
+import com.demoapp.masterslave.core.domain.repository.ClientRepository
+import com.demoapp.masterslave.core.domain.repository.SlaveRepository
+import com.demoapp.masterslave.core.domain.repository.VideoRepository
 import com.demoapp.masterslave.core.utils.directoryName
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -24,10 +24,6 @@ import java.net.ServerSocket
 
 val commonModule = module {
     single { SharedState() }
-}
-
-val nsdModule = module {
-    single { androidContext().getSystemService(NSD_SERVICE) as NsdManager }
 }
 
 val serverSocketModule = module {
@@ -42,24 +38,24 @@ val fileModule = module {
             File(Environment.getExternalStorageDirectory(), androidContext().directoryName())
         }
 
-        Log.i("DIRECTORY", fileDir.absolutePath)
-
         if (!fileDir.exists()) fileDir.mkdirs()
         fileDir
     }
 }
 
-val helperModule = module {
-    single { SocketHelper() }
+val socketModule = module {
+    single { BaseSocketService() }
+    single { MasterSocketService(get(), get()) }
+    single { SlaveSocketService(get()) }
 }
 
-val dataSourceModule = module {
-    single { MasterDataSource(get()) }
-    single { SlaveDataSource(get()) }
+val nsdModule = module {
+    single { androidContext().getSystemService(NSD_SERVICE) as NsdManager }
+    single { NsdService(get()) }
 }
 
 val repositoriesModule = module {
-    single<ClientRepository> { ClientRepositoryImpl(get(), get(), get()) }
-    single<VideoRepository> { VideoRepositoryImpl(get()) }
+    single<ClientRepository> { ClientRepositoryImpl(get(), get()) }
+    single<VideoRepository> { VideoRepositoryImpl(get(), androidContext()) }
     single<SlaveRepository> { SlaveRepositoryImpl(get(), get()) }
 }

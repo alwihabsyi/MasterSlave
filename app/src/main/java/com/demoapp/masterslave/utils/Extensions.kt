@@ -18,9 +18,9 @@ import androidx.media3.common.C
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Timeline
 import com.demoapp.masterslave.R
-import com.demoapp.masterslave.presentation.player.PlayerFragment
-import java.io.File
 import com.demoapp.masterslave.core.utils.directoryName
+import com.demoapp.masterslave.ui.player.PlayerFragment
+import java.io.File
 
 fun Activity.toast(msg: String?) {
     Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()

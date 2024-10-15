@@ -12,7 +12,7 @@
         tools:ignore="ScopedStorage" />
 
     <application
-        android:name=".MasterSlaveApplication"
+        android:name=".app.MasterSlaveApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -23,13 +23,13 @@
         android:theme="@style/Theme.MasterSlave"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.slave.SlaveActivity"
+            android:name=".ui.slave.SlaveActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.master.MasterActivity"
+            android:name=".ui.master.MasterActivity"
             android:exported="false" />
         <activity
-            android:name=".presentation.main.MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

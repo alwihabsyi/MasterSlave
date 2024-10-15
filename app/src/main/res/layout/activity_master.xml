@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.master.MasterActivity">
+    tools:context=".ui.master.MasterActivity">
 
     <ImageView
         android:id="@+id/iv_indicator"
@@ -27,6 +27,15 @@
         app:layout_constraintStart_toEndOf="@id/iv_indicator"
         app:layout_constraintTop_toTopOf="@id/iv_indicator" />
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="30dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/upload_video"
+        app:layout_constraintTop_toBottomOf="@id/iv_indicator" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_videos"
         android:layout_width="0dp"
@@ -35,7 +44,7 @@
         app:layout_constraintBottom_toTopOf="@id/btn_send"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_indicator" />
+        app:layout_constraintTop_toBottomOf="@id/btn_add" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_send"

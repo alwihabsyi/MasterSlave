@@ -1,4 +1,4 @@
-package com.demoapp.masterslave.presentation.player
+package com.demoapp.masterslave.ui.player
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

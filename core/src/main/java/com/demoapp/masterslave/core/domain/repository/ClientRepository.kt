@@ -4,7 +4,7 @@ import com.demoapp.masterslave.core.domain.model.VideoFile
 import java.net.Socket
 
 interface ClientRepository {
-    suspend fun startTcpServer(onConnected: (Socket, String) -> Unit, onFailed: () -> Unit)
+    suspend fun startTcpServer(onStatusChange: () -> Unit)
     suspend fun registerNsdService(onRegistered: (String) -> Unit)
     suspend fun sendFilesToClient(
         socket: Socket,

@@ -1,7 +1,10 @@
-package com.demoapp.masterslave.presentation.master
+package com.demoapp.masterslave.ui.master
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.demoapp.masterslave.R
@@ -9,17 +12,21 @@ import com.demoapp.masterslave.core.common.SharedState
 import com.demoapp.masterslave.core.domain.model.VideoFile
 import com.demoapp.masterslave.core.domain.ui.VideoAdapter
 import com.demoapp.masterslave.databinding.ActivityMasterBinding
-import com.demoapp.masterslave.presentation.player.PlayerViewModel
+import com.demoapp.masterslave.ui.player.PlayerViewModel
 import com.demoapp.masterslave.utils.getIndicator
 import com.demoapp.masterslave.utils.setFullScreen
 import com.demoapp.masterslave.utils.switchToExoPlayerFragment
 import com.demoapp.masterslave.utils.toast
 import org.koin.android.ext.android.inject
+import org.koin.android.scope.AndroidScopeComponent
+import org.koin.androidx.scope.activityScope
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.scope.Scope
 import java.net.Socket
 
-class MasterActivity : AppCompatActivity() {
+class MasterActivity : AppCompatActivity(), AndroidScopeComponent {
 
+    override val scope: Scope by activityScope()
     private var _binding: ActivityMasterBinding? = null
     private val binding get() = _binding!!
     private val viewModel by viewModel<MasterViewModel>()
@@ -32,6 +39,24 @@ class MasterActivity : AppCompatActivity() {
     private val connectedClients get() = sharedState.connectedClients
     private val clientsReceivedFile = mutableListOf<Socket>()
     private val clientsReceivedTimeStamp = mutableListOf<Socket>()
+
+    private var pickVideosLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+            val clipData = result.data!!.clipData
+
+            if (clipData != null) {
+                for (i in 0 until clipData.itemCount) {
+                    val videoUri = clipData.getItemAt(i).uri
+                    viewModel.moveToMedia(videoUri)
+                }
+            } else {
+                val videoUri = result.data!!.data
+                if (videoUri != null) {
+                    viewModel.moveToMedia(videoUri)
+                }
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,19 +72,15 @@ class MasterActivity : AppCompatActivity() {
         registerNsdService { serviceName -> Log.i(TAG, "Service Registered: $serviceName") }
 
         startTcpServer(
-            onConnected = { _, hostAddress ->
-                Log.i(TAG, "New slave connected: $hostAddress")
-                runOnUiThread { setupConnectionStatus(true) }
-            },
-            onFailed = {
-                runOnUiThread { setupConnectionStatus(false) }
+            onStatusChange = {
+                runOnUiThread { setupConnectionStatus() }
             }
         )
     }
 
-    private fun setupConnectionStatus(isConnected: Boolean) = binding.run {
-        val indicator = isConnected.getIndicator(this@MasterActivity)
-        val message = if (isConnected) getString(R.string.slave_connected, connectedClients.size.toString()) else "No slave connected"
+    private fun setupConnectionStatus() = binding.run {
+        val indicator = (connectedClients.size > 0).getIndicator(this@MasterActivity)
+        val message = if (connectedClients.size > 0) getString(R.string.slave_connected, connectedClients.size.toString()) else "No slave connected"
         ivIndicator.setImageDrawable(indicator)
         tvIndicator.text = message
     }
@@ -83,6 +104,14 @@ class MasterActivity : AppCompatActivity() {
             }
 
             sendSelectedVideos(selectedVideos)
+        }
+
+        btnAdd.setOnClickListener {
+            val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                type = "video/*"
+                putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+            }
+            pickVideosLauncher.launch(intent)
         }
     }
 

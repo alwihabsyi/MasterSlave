@@ -1,4 +1,4 @@
-package com.demoapp.masterslave.presentation.slave
+package com.demoapp.masterslave.ui.slave
 
 import android.net.nsd.NsdServiceInfo
 import androidx.lifecycle.ViewModel

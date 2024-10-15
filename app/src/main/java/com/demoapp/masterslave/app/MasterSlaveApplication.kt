@@ -1,13 +1,12 @@
-package com.demoapp.masterslave
+package com.demoapp.masterslave.app
 
 import android.app.Application
 import com.demoapp.masterslave.core.di.commonModule
-import com.demoapp.masterslave.core.di.dataSourceModule
 import com.demoapp.masterslave.core.di.fileModule
-import com.demoapp.masterslave.core.di.helperModule
 import com.demoapp.masterslave.core.di.nsdModule
 import com.demoapp.masterslave.core.di.repositoriesModule
 import com.demoapp.masterslave.core.di.serverSocketModule
+import com.demoapp.masterslave.core.di.socketModule
 import com.demoapp.masterslave.di.useCasesModule
 import com.demoapp.masterslave.di.viewModelModules
 import org.koin.android.ext.koin.androidContext
@@ -30,8 +29,7 @@ class MasterSlaveApplication: Application() {
                 repositoriesModule,
                 useCasesModule,
                 viewModelModules,
-                helperModule,
-                dataSourceModule
+                socketModule
             ))
         }
     }

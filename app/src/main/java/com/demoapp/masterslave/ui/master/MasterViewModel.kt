@@ -1,5 +1,6 @@
-package com.demoapp.masterslave.presentation.master
+package com.demoapp.masterslave.ui.master
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
@@ -11,12 +12,12 @@ import java.net.Socket
 
 class MasterViewModel(
     private val clientUseCase: ClientUseCase,
-    videoUseCase: VideoUseCase
+    private val videoUseCase: VideoUseCase
 ): ViewModel() {
     val directoryVideos = videoUseCase.getVideosFromDirectory().asLiveData()
 
-    fun startTcpServer(onConnected: (Socket, String) -> Unit, onFailed: () -> Unit) = viewModelScope.launch {
-        clientUseCase.startTcpServer(onConnected, onFailed)
+    fun startTcpServer(onStatusChange: () -> Unit) = viewModelScope.launch {
+        clientUseCase.startTcpServer(onStatusChange)
     }
 
     fun registerNsdService(onSuccess: (String) -> Unit) = viewModelScope.launch {
@@ -49,6 +50,10 @@ class MasterViewModel(
         masterTimestamp: Long
     ) = viewModelScope.launch {
         clientUseCase.sendVideoTimeStamp(socket, video, masterPosition, masterTimestamp)
+    }
+
+    fun moveToMedia(uri: Uri) = viewModelScope.launch {
+        videoUseCase.moveToMedia(uri)
     }
 
     fun closeSocket() = clientUseCase.closeClient()

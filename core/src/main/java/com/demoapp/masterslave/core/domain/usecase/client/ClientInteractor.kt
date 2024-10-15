@@ -6,9 +6,8 @@ import java.net.Socket
 
 class ClientInteractor(private val clientRepository: ClientRepository):ClientUseCase {
     override suspend fun startTcpServer(
-        onConnected: (Socket, String) -> Unit,
-        onFailed: () -> Unit
-    ) = clientRepository.startTcpServer(onConnected, onFailed)
+        onStatusChange: () -> Unit
+    ) = clientRepository.startTcpServer(onStatusChange)
 
     override suspend fun sendFilesToClient(
         socket: Socket,

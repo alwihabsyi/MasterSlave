@@ -1,4 +1,4 @@
-package com.demoapp.masterslave.presentation.player
+package com.demoapp.masterslave.ui.player
 
 import android.net.Uri
 import android.os.Bundle

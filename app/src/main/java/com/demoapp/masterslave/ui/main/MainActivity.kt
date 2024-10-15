@@ -1,4 +1,4 @@
-package com.demoapp.masterslave.presentation.main
+package com.demoapp.masterslave.ui.main
 
 import android.Manifest
 import android.content.Intent
@@ -11,8 +11,8 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.demoapp.masterslave.databinding.ActivityMainBinding
-import com.demoapp.masterslave.presentation.master.MasterActivity
-import com.demoapp.masterslave.presentation.slave.SlaveActivity
+import com.demoapp.masterslave.ui.master.MasterActivity
+import com.demoapp.masterslave.ui.slave.SlaveActivity
 import com.demoapp.masterslave.utils.setFullScreen
 import com.demoapp.masterslave.utils.toast
 
